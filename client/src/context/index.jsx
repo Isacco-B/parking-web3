@@ -42,7 +42,7 @@ export const StateContextProvider = ({ children }) => {
 
   async function returnParkingSpace(id) {
     try {
-      const data = await contract.call("rentParkingSpace", [id]);
+      const data = await contract.call("returnParkingSpace", [id]);
       console.log("contract call success", data);
     } catch (error) {
       console.log("contract call failure", error);
