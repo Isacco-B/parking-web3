@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CustomButton } from "../componets";
-import { maps, price, ownerIcon, loader } from "../assets";
+import { maps, price, ownerIcon, loader, renter } from "../assets";
 import { useStateContext } from "../context";
 import { ethers } from "ethers";
-
 
 function ParkingSpaceDetails() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,8 +11,8 @@ function ParkingSpaceDetails() {
   const [hours, setHours] = useState("");
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { rentParkingSpace } = useStateContext();
-  console.log(amount)
+  const { rentParkingSpace, address } = useStateContext();
+  console.log(amount);
 
   const {
     Id,
@@ -24,6 +23,7 @@ function ParkingSpaceDetails() {
     streetAddress,
     isAvailable,
     owner,
+    renter,
     pricePerHour,
   } = state;
 
@@ -110,38 +110,61 @@ function ParkingSpaceDetails() {
                 }
               ></div>
             </div>
-            <div className="mt-[30px]">
-              <input
-                type="number"
-                placeholder="ETH 0.1"
-                step="0.01"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Min 1h"
-                step="1"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px] mt-2"
-                value={hours}
-                onChange={(e) => setHours(e.target.value)}
-              />
-              {isLoading ? (
-                <img
-                  src={loader}
-                  alt="loader"
-                  className="w-[100px] h-[100px] object-contain"
+            {address === owner ? (
+              <div className="mt-[20px]">
+                {isAvailable &&
+                  renter === "0x0000000000000000000000000000000000000000" && (
+                    <CustomButton
+                      btnType="button"
+                      title="Disable parking"
+                      styles="w-full bg-[#f08080] mt-[20px]"
+                      handleClick={handleRentParking}
+                    />
+                  )}
+                {!isAvailable &&
+                  renter !== "0x0000000000000000000000000000000000000000" && (
+                    <CustomButton
+                      btnType="button"
+                      title="Unlock parking"
+                      styles="w-full bg-[#4BB3FD] mt-[20px]"
+                      handleClick={handleRentParking}
+                    />
+                  )}
+              </div>
+            ) : (
+              <div className="mt-[20px]">
+                <input
+                  type="number"
+                  placeholder="ETH 0.1"
+                  step="0.01"
+                  className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                 />
-              ) : (
-                <CustomButton
-                  btnType="button"
-                  title="Rent Parking"
-                  styles="w-full bg-[#4BB3FD] mt-[20px]"
-                  handleClick={handleRentParking}
+                <input
+                  type="number"
+                  placeholder="Min 1h"
+                  step="1"
+                  className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px] mt-2"
+                  value={hours}
+                  onChange={(e) => setHours(e.target.value)}
                 />
-              )}
-            </div>
+                {isLoading ? (
+                  <img
+                    src={loader}
+                    alt="loader"
+                    className="w-[100px] h-[100px] object-contain"
+                  />
+                ) : (
+                  <CustomButton
+                    btnType="button"
+                    title="Rent Parking"
+                    styles="w-full bg-[#4BB3FD] mt-[20px]"
+                    handleClick={handleRentParking}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
