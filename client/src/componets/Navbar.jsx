@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { logo, menu } from "../assets";
-import { CustomButton } from '../componets'
-import { useNavigate } from "react-router-dom";
+import { CustomButton } from "../componets";
+import { Link, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context";
 import { navlinks } from "../constants";
-
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,15 +12,17 @@ function Navbar() {
   const { connect, address } = useStateContext();
 
   return (
-    <div className="flex flex-row justify-between items-center h-[69px] w-full px-6 rounded-[10px] mb-9">
-      <div className="bg-white p-3 rounded-full shadow-md">
-        <img
-          src={logo}
-          alt="logo"
-          className="w-[40px] h-[40px] cursor-pointer"
-        />
-      </div>
-      <div className="flex flex-row items-center gap-3">
+    <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
+      <div className="sm:flex hidden flex-row justify-between gap-4 items-center w-full">
+        <Link to="/">
+          <div className="w-[52px] h-[52px] flex justify-center items-center cursor-pointer">
+            <img
+              src={logo}
+              alt="thirdweb"
+              className="w-[80%] h-[80%] object-contain"
+            />
+          </div>
+        </Link>
         <CustomButton
           btnType="button"
           title={address ? "Add Parking" : "Connect"}
@@ -35,14 +36,13 @@ function Navbar() {
           }}
         />
       </div>
-      {/* Small screen navigation */}
 
       <div className="sm:hidden flex justify-between items-center relative">
-        <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
+        <div className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer">
           <img
             src={logo}
             alt="logo"
-            className="w-[60%] h-[60%] object-contain"
+            className="w-[70%] h-[70%] object-contain"
             onClick={() => navigate("/")}
           />
         </div>
@@ -53,8 +53,8 @@ function Navbar() {
           onClick={() => setToggleDrawer(!toggleDrawer)}
         />
         <div
-          className={`absolute top-[60px] rounded-[10px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${
-            !toggleDrawer ? "-translate-y-[100vh]" : "-translate-y-0"
+          className={`absolute top-[60px] rounded-[10px] right-0 left-0 bg-[white] z-10 shadow-secondary py-4 ${
+            !toggleDrawer ? "-translate-x-[100vh]" : "-translate-x-0"
           } transition-all duration-700 `}
         >
           <ul className="mb-4">
@@ -62,7 +62,7 @@ function Navbar() {
               <li
                 key={link.name}
                 className={`flex p-4 ${
-                  isActive === link.name && "bg-[#3a3a43]"
+                  isActive === link.name && "bg-[#c1fba4]"
                 }`}
                 onClick={() => {
                   setIsActive(link.name);
@@ -79,7 +79,7 @@ function Navbar() {
                 />
                 <p
                   className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
-                    isActive === link.name ? "text-[#1dc071]" : "text-[#808191]"
+                    isActive === link.name ? "text-[black]" : "text-[#808191]"
                   }`}
                 >
                   {link.name}
@@ -90,14 +90,13 @@ function Navbar() {
           <div className="flex mx-4 items-center justify-center">
             <CustomButton
               btnType="button"
-              title={address ? "Create a campaign" : "Connect"}
-              styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
+              title={address ? "Add Parking" : "Connect"}
+              styles={address ? "bg-[#1dc071]" : "bg-[#f08080]"}
               handleClick={() => {
                 if (address) {
-                  navigate("/create-campaign");
-                  setToggleDrawer(false);
+                  navigate("/add-parking");
                 } else {
-                  (connect());
+                  connect();
                 }
               }}
             />
