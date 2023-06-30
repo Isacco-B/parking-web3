@@ -1,14 +1,24 @@
-export const daysLeft = (deadline) => {
-  const difference = new Date(deadline).getTime() - Date.now();
-  const remainingDays = difference / (1000 * 3600 * 24);
 
-  return remainingDays.toFixed(0);
-};
+export const calculateBarPercentage = (endTime) => {
+  // const nowDate = Math.round(new Date().getTime() / 1000);
+  // if (nowDate < endTime) {
+  //   return 100
+  // } else {
+  //   // Define the two dates
+  //   const date1 = new Date(1688078937 * 1000);
+  //   const date2 = new Date();
+  //   console.log(date1)
+  //   console.log(date2);
 
-export const calculateBarPercentage = (endTime, startTime) => {
-  const percentage = Math.round((startTime * 100) / endTime);
+  //   // Calculate the absolute difference in milliseconds between the two dates
+  //   const timeDifference = Math.abs(date1 - date2);
 
-  return percentage;
+  //   // Calculate the percentage difference
+  //   const percentageDifference =
+  //     (timeDifference / (date1.getTime() + date2.getTime())) * 100;
+
+  //   console.log(percentageDifference); // Print the percentage difference
+  // }
 };
 
 export const checkIfImage = (url, callback) => {

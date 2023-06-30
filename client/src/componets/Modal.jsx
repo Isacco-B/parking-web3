@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function Modal() {
+
+function Modal() {
   const [showModal, setShowModal] = React.useState(false);
   return (
     <>
@@ -65,3 +66,5 @@ export default function Modal() {
     </>
   );
 }
+
+export default Modal;

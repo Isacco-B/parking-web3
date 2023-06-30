@@ -6,6 +6,7 @@ import { CustomButton } from "../componets";
 import { checkIfImage } from "../utils";
 import { FormField } from "../componets";
 import { useStateContext } from "../context";
+import toast from "react-hot-toast";
 
 function CreateParkingSpace() {
   const navigate = useNavigate();
@@ -35,8 +36,9 @@ function CreateParkingSpace() {
         });
         setIsLoading(false);
         navigate("/");
+        toast.success("Parking successfully added");
       } else {
-        alert("Provaide valid image URL");
+        toast.error("Provaide valid image URL");
         setForm({ ...form, image: "" });
       }
     });

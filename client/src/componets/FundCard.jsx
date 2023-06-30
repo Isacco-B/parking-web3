@@ -1,8 +1,11 @@
 import React from "react";
-import { maps, price, ownerIcon } from "../assets";
+import { maps, price, ownerIcon, renterIcon } from "../assets";
+import ProcessBar from "./ProgressBar";
+
 
 function FundCard({
   owner,
+  renter,
   city,
   postCode,
   streetAddress,
@@ -11,17 +14,22 @@ function FundCard({
   isAvailable,
   image,
   handleClick,
+  endTime,
 }) {
   return (
     <div
       className="sm:w-[288px] w-full rounded-[10px] bg-white cursor-pointer shadow-md"
       onClick={handleClick}
     >
-      <img
-        src={image}
-        alt="image"
-        className="w-full h-[157px] object-cover rounded-t-[10px]"
-      />
+      <div className="flex flex-col items-center">
+        <img
+          src={image}
+          alt="image"
+          className="w-full h-[157px] object-cover rounded-t-[10px]"
+        />
+        {!isAvailable && <ProcessBar endTime={endTime} />}
+      </div>
+
       <div className="flex flex-col p-4">
         <div className="flex flex-row  items-center mb-[18px]">
           <img
@@ -70,17 +78,31 @@ function FundCard({
             ></div>
           </div>
         </div>
-        <div className="flex items-center mt-[18px] gap-[3px]">
-          <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center">
-            <img
-              src={ownerIcon}
-              alt="owner"
-              className="w-1/2 h-1/2 object-contain"
-            />
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center gap-[3px]">
+            <div className="w-[30px] h-[30px] flex items-center">
+              <img
+                src={ownerIcon}
+                alt="owner"
+                className="w-1/2 h-1/2 object-contain"
+              />
+            </div>
+            <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
+              by <span className="text-[#b2b3bd]">{owner}</span>
+            </p>
           </div>
-          <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
-            by <span className="text-[#b2b3bd]">{owner}</span>
-          </p>
+          <div className="flex flex-row items-center gap-[3px]">
+            <div className="w-[30px] h-[30px] flex items-center">
+              <img
+                src={renterIcon}
+                alt="renter"
+                className="w-1/2 h-1/2 object-contain"
+              />
+            </div>
+            <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
+              by <span className="text-[#b2b3bd]">{renter}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

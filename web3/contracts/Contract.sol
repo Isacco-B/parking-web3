@@ -57,7 +57,7 @@ contract RentParking {
 
     function returnParkingSpace(uint256 parkingSpaceId) external {
         require(!parkingSpaces[parkingSpaceId].isAvailable, "Parking space is not rented");
-        require(msg.sender == parkingSpaces[parkingSpaceId].renter, "Only the renter can return the parking space");
+        require(msg.sender == parkingSpaces[parkingSpaceId].owner, "Only the owner can return the parking space");
         require(block.timestamp >= parkingSpaces[parkingSpaceId].endTime, "Cannot return the parking space before the rental period ends");
 
         payable(parkingSpaces[parkingSpaceId].owner).transfer(parkingSpaces[parkingSpaceId].pricePerHour * ((parkingSpaces[parkingSpaceId].endTime - parkingSpaces[parkingSpaceId].startTime) / 1 hours));

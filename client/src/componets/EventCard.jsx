@@ -19,10 +19,14 @@ function EventCard({ data, eventName, transaction }) {
             className="w-[17px] h-[17px] object-contain"
           />
           <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051] truncate">
-            {data.owner}
+            {transaction.address}
           </p>
         </div>
-        <CustomButton btnType="button" title={"View"} styles={"bg-[#4BB3FD]"} />
+        <CustomButton
+          btnType="button"
+          title={"View"}
+          styles={"bg-[#4BB3FD] "}
+        />
       </div>
     </div>
   );

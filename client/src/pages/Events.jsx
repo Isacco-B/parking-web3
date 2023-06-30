@@ -22,9 +22,9 @@ function Events() {
     async function getAllEvents() {
       setIsLoading(true)
       const allEvents = await contract.events.getAllEvents();
-      setEvents(await allEvents);
+      console.log(allEvents)
+      setEvents(allEvents);
       setIsLoading(false)
-      console.log(events);
     }
     getAllEvents();
   }, [contract, address]);
@@ -40,7 +40,7 @@ function Events() {
           />
         </div>
       )}
-      <p className="font-epilogue capitalize font-semibold">Events</p>
+      <p className="font-epilogue font-semibold uppercase">Events</p>
       {events.map((event, i) => (
         <EventCard key={i} {...event} isLoading={isLoading} />
       ))}

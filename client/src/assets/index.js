@@ -11,9 +11,10 @@ import email from "./email.svg";
 import github from "./github.svg";
 import logo from "./logo.svg";
 import ownerIcon from "./owner.svg";
-import renter from "./renter.svg";
+import renterIcon from "./renter.svg";
 import price from "./price.svg";
 import available from "./available.svg";
+import menu from "./menu.svg";
 
 export {
   createParking,
@@ -29,7 +30,8 @@ export {
   github,
   logo,
   ownerIcon,
-  renter,
+  renterIcon,
   price,
   available,
+  menu,
 };

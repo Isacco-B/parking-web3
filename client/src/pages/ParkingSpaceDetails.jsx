@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CustomButton, Loader } from "../componets";
-import { maps, price, ownerIcon, loader, renter } from "../assets";
+import { maps, price } from "../assets";
 import { useStateContext } from "../context";
-import { ethers } from "ethers";
+import toast from "react-hot-toast";
 
 function ParkingSpaceDetails() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +36,7 @@ function ParkingSpaceDetails() {
     setIsLoading(true);
     await rentParkingSpace(Id, hours, amount);
     navigate("/profile");
+    toast.success("successfully rented parking");
     setIsLoading(false);
   }
 
@@ -43,6 +44,7 @@ function ParkingSpaceDetails() {
     setIsLoading(true);
     await returnParkingSpace(Id);
     navigate("/profile");
+    toast.success("parking unlocked successfully");
     setIsLoading(false);
   }
 
@@ -50,7 +52,9 @@ function ParkingSpaceDetails() {
     setIsLoading(true);
     await setParkingSpaceAvailability(Id, !isAvailable);
     navigate("/profile");
+    toast.success("Parking state changed successfully");
     setIsLoading(false);
+
   }
 
   return (
@@ -179,7 +183,7 @@ function ParkingSpaceDetails() {
                       value={hours}
                       onChange={(e) => setHours(e.target.value)}
                     />
-                    <div className="flex flex-row items-center mt-2">
+                    <div className="flex flex-col items-center mt-2">
                       <CustomButton
                         btnType="button"
                         title="Rent Parking"
