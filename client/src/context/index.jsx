@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useAddress, useContract, useMetamask } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
+import toast from "react-hot-toast";
 
 const StateContext = createContext();
 
@@ -12,7 +13,6 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress();
   const connect = useMetamask();
 
-
   async function createParkingSpace(form) {
     try {
       const data = await contract.call("createParkingSpace", [
@@ -23,9 +23,10 @@ export const StateContextProvider = ({ children }) => {
         form.pricePerHour,
         form.image,
       ]);
-      console.log("contract call success", data);
+      toast.success("Parking successfully added");
     } catch (error) {
-      console.log("contract call failure", error);
+      const { reason } = error;
+      toast.error(reason);
     }
   }
 
@@ -34,18 +35,20 @@ export const StateContextProvider = ({ children }) => {
       const data = await contract.call("rentParkingSpace", [Id, hours], {
         value: ethers.utils.parseEther(amount),
       });
-      console.log("contract call success", data);
+      toast.success("successfully rented parking");
     } catch (error) {
-      console.log("contract call failure", error);
+      const { reason } = error;
+      toast.error(reason);
     }
   }
 
   async function returnParkingSpace(id) {
     try {
       const data = await contract.call("returnParkingSpace", [id]);
-      console.log("contract call success", data);
+      toast.success("parking unlocked successfully");
     } catch (error) {
-      console.log("contract call failure", error);
+      const { reason } = error;
+      toast.error(reason);
     }
   }
 
@@ -55,9 +58,10 @@ export const StateContextProvider = ({ children }) => {
         id,
         type,
       ]);
-      console.log("contract call success", data);
+      toast.success("Parking state changed successfully");
     } catch (error) {
-      console.log("contract call failure", error);
+      const { reason } = error;
+      toast.error(reason);
     }
   }
 

@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CustomButton, Loader } from "../componets";
 import { maps, price } from "../assets";
 import { useStateContext } from "../context";
-import toast from "react-hot-toast";
 
 function ParkingSpaceDetails() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,13 +29,14 @@ function ParkingSpaceDetails() {
     owner,
     renter,
     pricePerHour,
+    startTime,
+    endTime,
   } = state;
 
   async function handleRentParking() {
     setIsLoading(true);
     await rentParkingSpace(Id, hours, amount);
     navigate("/profile");
-    toast.success("successfully rented parking");
     setIsLoading(false);
   }
 
@@ -44,7 +44,6 @@ function ParkingSpaceDetails() {
     setIsLoading(true);
     await returnParkingSpace(Id);
     navigate("/profile");
-    toast.success("parking unlocked successfully");
     setIsLoading(false);
   }
 
@@ -52,9 +51,7 @@ function ParkingSpaceDetails() {
     setIsLoading(true);
     await setParkingSpaceAvailability(Id, !isAvailable);
     navigate("/profile");
-    toast.success("Parking state changed successfully");
     setIsLoading(false);
-
   }
 
   return (
@@ -67,7 +64,7 @@ function ParkingSpaceDetails() {
             className="w-full h-[410px] object-cover rounded-xl"
           />
         </div>
-        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3">
+        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3 h-[410px]">
           <div>
             <h4 className="font-epilogue font-semibold text-[18px text-black uppercase">
               address
@@ -119,40 +116,43 @@ function ParkingSpaceDetails() {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 items-center">
-          <div className="flex flex-col p-4 rounded-[10px]">
-            <div className="flex flex-row  items-center">
-              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051] pr-3">
-                Available:
-              </p>
-              <div
-                className={
-                  isAvailable
-                    ? "w-[15px] h-[15px] rounded-full bg-green-500"
-                    : "w-[15px] h-[15px] rounded-full bg-red-500"
-                }
-              ></div>
-            </div>
-            {address === owner ? (
-              <div className="mt-[20px]">
-                {renter === "0x0000000000000000000000000000000000000000" && (
-                  <div className="flex flex-row items-center">
-                    <CustomButton
-                      btnType="button"
-                      title={isAvailable ? "Disable parking" : "Enable parking"}
-                      styles={
-                        isAvailable
-                          ? "w-full bg-[#f08080] mr-2"
-                          : "w-full bg-[#1dc071] mr-2"
-                      }
-                      handleClick={handleSetAvailability}
-                    />
-                    <Loader isLoading={isLoading} />
-                  </div>
-                )}
-                {!isAvailable &&
-                  renter !== "0x0000000000000000000000000000000000000000" && (
-                    <div className="flex flex-row items-center">
+        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3">
+          <div className="flex flex-row  items-center">
+            <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[16px] text-black pr-3 uppercase">
+              Available:
+            </p>
+            <div
+              className={
+                isAvailable
+                  ? "w-[15px] h-[15px] rounded-full bg-green-500"
+                  : "w-[15px] h-[15px] rounded-full bg-red-500"
+              }
+            ></div>
+          </div>
+          {address === owner ? (
+            <div className="mt-[20px]">
+              {renter === "0x0000000000000000000000000000000000000000" && (
+                <div className="flex flex-row items-center">
+                  <CustomButton
+                    btnType="button"
+                    title={isAvailable ? "Disable parking" : "Enable parking"}
+                    styles={
+                      isAvailable
+                        ? "min-w-[300px] bg-[#f08080] mr-2"
+                        : "min-w-[300px] bg-[#1dc071] mr-2"
+                    }
+                    handleClick={handleSetAvailability}
+                  />
+                  <Loader isLoading={isLoading} />
+                </div>
+              )}
+              {!isAvailable &&
+                renter !== "0x0000000000000000000000000000000000000000" && (
+                  <div className="flex flex-col items-center">
+                    <div className="block w-full">
+                      <p className="uppercase font-epilogue font-semibold text-[14px] text-[#505051] mb-2">
+                        unlock the parking and get the reward
+                      </p>
                       <CustomButton
                         btnType="button"
                         title="Unlock parking"
@@ -161,42 +161,42 @@ function ParkingSpaceDetails() {
                       />
                       <Loader isLoading={isLoading} />
                     </div>
-                  )}
-              </div>
-            ) : (
-              <div>
-                {isAvailable && (
-                  <div className="mt-[20px]">
-                    <input
-                      type="number"
-                      placeholder="ETH 0.1"
-                      step="0.01"
-                      className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                    <input
-                      type="number"
-                      placeholder="Min 1h"
-                      step="1"
-                      className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px] mt-2"
-                      value={hours}
-                      onChange={(e) => setHours(e.target.value)}
-                    />
-                    <div className="flex flex-col items-center mt-2">
-                      <CustomButton
-                        btnType="button"
-                        title="Rent Parking"
-                        styles="w-full bg-[#4BB3FD] mr-2"
-                        handleClick={handleRentParking}
-                      />
-                      <Loader isLoading={isLoading} />
-                    </div>
                   </div>
                 )}
-              </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div>
+              {isAvailable && (
+                <div className="mt-[20px]">
+                  <input
+                    type="number"
+                    placeholder="ETH 0.1"
+                    step="0.01"
+                    className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Min 1h"
+                    step="1"
+                    className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-black text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px] mt-2"
+                    value={hours}
+                    onChange={(e) => setHours(e.target.value)}
+                  />
+                  <div className="flex flex-col items-center mt-2">
+                    <CustomButton
+                      btnType="button"
+                      title="Rent Parking"
+                      styles="w-full bg-[#4BB3FD] mr-2"
+                      handleClick={handleRentParking}
+                    />
+                    <Loader isLoading={isLoading} />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
