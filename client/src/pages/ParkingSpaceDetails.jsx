@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CustomButton, Loader } from "../componets";
-import { maps, price } from "../assets";
+import { CustomButton, Date, Loader } from "../componets";
+import { maps, price, ownerIcon, renterIcon } from "../assets";
 import { useStateContext } from "../context";
 
 function ParkingSpaceDetails() {
@@ -16,7 +16,6 @@ function ParkingSpaceDetails() {
     setParkingSpaceAvailability,
     address,
   } = useStateContext();
-  console.log(amount);
 
   const {
     Id,
@@ -64,24 +63,24 @@ function ParkingSpaceDetails() {
             className="w-full h-[410px] object-cover rounded-xl"
           />
         </div>
-        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3 h-[410px]">
+        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3 h-[410px] justify-center">
           <div>
             <h4 className="font-epilogue font-semibold text-[18px text-black uppercase">
               address
             </h4>
-            <div className="flex flex-row mt-[20px]">
+            <div className="flex flex-row mt-[20px] items-center">
               <img
                 src={maps}
                 alt="tag"
                 className="w-[17px] h-[17px] object-contain"
               />
-              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051]">
+              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[14px] text-[#505051]">
                 {city}
               </p>
-              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051]">
+              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[14px] text-[#505051]">
                 {streetAddress}
               </p>
-              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051]">
+              <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[14px] text-[#505051]">
                 {postCode}
               </p>
             </div>
@@ -108,7 +107,7 @@ function ParkingSpaceDetails() {
                     alt="tag"
                     className="w-[17px] h-[17px] object-contain"
                   />
-                  <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#505051]">
+                  <p className="ml-[12px] font-epilogue font-medium text-[14px] text-[#505051]">
                     {pricePerHour} ETH /h
                   </p>
                 </div>
@@ -116,23 +115,57 @@ function ParkingSpaceDetails() {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3">
-          <div className="flex flex-row  items-center">
-            <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[16px] text-black pr-3 uppercase">
-              Available:
-            </p>
-            <div
-              className={
-                isAvailable
-                  ? "w-[15px] h-[15px] rounded-full bg-green-500"
-                  : "w-[15px] h-[15px] rounded-full bg-red-500"
-              }
-            ></div>
+        <div className="flex flex-1 flex-col gap-[40px] lg:m-auto pl-3 h-[410px] justify-center">
+          <div>
+            <div className="lg:hidden bg-[#505051] h-[2px] w-full mb-3"></div>
+            <div className="flex flex-row items-center gap-[3px]">
+              <div className="w-[30px] h-[30px] flex items-center">
+                <img
+                  src={ownerIcon}
+                  alt="owner"
+                  className="w-1/2 h-1/2 object-contain"
+                />
+              </div>
+              <p className="flex-1 font-epilogue font-normal text-[14px] text-[#808191] truncate">
+                by <span className="text-[#b2b3bd]">{owner}</span>
+              </p>
+            </div>
+            <div className="flex flex-row items-center gap-[3px]">
+              <div className="w-[30px] h-[30px] flex items-center">
+                <img
+                  src={renterIcon}
+                  alt="owner"
+                  className="w-1/2 h-1/2 object-contain"
+                />
+              </div>
+              <p className="flex-1 font-epilogue font-normal text-[14px] text-[#808191] truncate">
+                by <span className="text-[#b2b3bd]">{renter}</span>
+              </p>
+            </div>
           </div>
+          <div>
+            <div className="flex flex-row  items-center">
+              <p className="font-epilogue font-medium text-[16px] text-black mr-3 uppercase">
+                Available:
+              </p>
+              <div
+                className={
+                  isAvailable
+                    ? "w-[15px] h-[15px] rounded-full bg-green-500"
+                    : "w-[15px] h-[15px] rounded-full bg-red-500"
+                }
+              ></div>
+            </div>
+            {!isAvailable &&
+              renter !== "0x0000000000000000000000000000000000000000" && (
+                <Date date1={startTime} date2={endTime} />
+              )}
+          </div>
+
           {address === owner ? (
             <div className="mt-[20px]">
               {renter === "0x0000000000000000000000000000000000000000" && (
-                <div className="flex flex-row items-center">
+                <div className="flex flex-col items-center">
                   <CustomButton
                     btnType="button"
                     title={isAvailable ? "Disable parking" : "Enable parking"}
@@ -149,7 +182,7 @@ function ParkingSpaceDetails() {
               {!isAvailable &&
                 renter !== "0x0000000000000000000000000000000000000000" && (
                   <div className="flex flex-col items-center">
-                    <div className="block w-full">
+                    <div className="block w-full m-auto">
                       <p className="uppercase font-epilogue font-semibold text-[14px] text-[#505051] mb-2">
                         unlock the parking and get the reward
                       </p>
@@ -159,14 +192,16 @@ function ParkingSpaceDetails() {
                         styles="w-full bg-[#4BB3FD] mr-2"
                         handleClick={handleReturnParkingSpace}
                       />
-                      <Loader isLoading={isLoading} />
+                      <div className="flex items-center justify-center">
+                        <Loader isLoading={isLoading} />
+                      </div>
                     </div>
                   </div>
                 )}
             </div>
           ) : (
             <div>
-              {isAvailable && (
+              {isAvailable && address && (
                 <div className="mt-[20px]">
                   <input
                     type="number"
