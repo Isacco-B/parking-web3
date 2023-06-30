@@ -7,7 +7,7 @@ export const navlinks = [
     link: "/",
   },
   {
-    name: "parking",
+    name: "add parking",
     imgUrl: createParking,
     link: "/add-parking",
   },

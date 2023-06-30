@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context";
-import { Filter, ParkingSpace } from "../componets";
+import { ParkingSpace } from "../componets";
 
 function Home() {
   const [parkingSpace, setParkingSpace] = useState("");
@@ -24,7 +24,6 @@ function Home() {
 
   return (
     <div>
-      <Filter/>
       <ParkingSpace
         title="Parking spaces available"
         isLoading={isLoading}

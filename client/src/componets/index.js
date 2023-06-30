@@ -10,4 +10,3 @@ export { default as EventCard } from "./EventCard";
 export { default as Modal } from "./Modal";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as Loader } from "./Loader";
-export { default as Filter } from "./Filter";
