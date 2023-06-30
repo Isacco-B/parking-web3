@@ -45,6 +45,7 @@ contract RentParking {
     function rentParkingSpace(uint256 _parkingSpaceId, uint256 _hours) external payable {
         require(parkingSpaces[_parkingSpaceId].isAvailable, "Parking space is not available");
         require(msg.value >= parkingSpaces[_parkingSpaceId].pricePerHour * _hours, "Insufficient payment");
+        require(_hours >= 1, "You have to rent for at least 1 hour");
 
         parkingSpaces[_parkingSpaceId].renter = msg.sender;
         parkingSpaces[_parkingSpaceId].isAvailable = false;
