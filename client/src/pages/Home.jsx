@@ -11,7 +11,6 @@ function Home() {
   async function fetchparkingSpace() {
     setIsLoading(true);
     const data = await getParkingSpace();
-    console.log(data)
     setParkingSpace(data);
     setIsLoading(false);
   }

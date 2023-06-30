@@ -12,7 +12,6 @@ function Events() {
     async function getAllEvents() {
       setIsLoading(true);
       const allEvents = await contract.events.getAllEvents();
-      console.log(allEvents);
       setEvents(allEvents);
       setIsLoading(false);
     }

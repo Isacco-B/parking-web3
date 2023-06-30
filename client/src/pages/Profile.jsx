@@ -18,8 +18,6 @@ function Profile() {
     const rentedParkingSpace = data.filter(
       (parking) => parking.renter === address
     );
-    console.log(address);
-    console.log(data);
     setParkingSpace(yourParkingSpace);
     setRentedParkingSpace(rentedParkingSpace);
     setIsLoading(false);

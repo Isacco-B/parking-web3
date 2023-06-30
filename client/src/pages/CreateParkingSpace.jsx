@@ -8,11 +8,10 @@ import { FormField } from "../componets";
 import { useStateContext } from "../context";
 import toast from "react-hot-toast";
 
-
 function CreateParkingSpace() {
   const navigate = useNavigate();
   const [islLoading, setIsLoading] = useState(false);
-  const { createParkingSpace } = useStateContext();
+  const { createParkingSpace, address } = useStateContext();
   const [form, setForm] = useState({
     city: "",
     streetAddress: "",

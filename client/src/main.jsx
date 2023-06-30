@@ -7,7 +7,6 @@ import { Sepolia } from "@thirdweb-dev/chains";
 import App from "./App";
 import "./index.css";
 
-console.log();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThirdwebProvider

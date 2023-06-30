@@ -1,4 +1,12 @@
-import { createParking, dashboard, profile, listEvents, email, github, linkedin } from "../assets";
+import {
+  createParking,
+  dashboard,
+  profile,
+  listEvents,
+  email,
+  github,
+  linkedin,
+} from "../assets";
 
 export const navlinks = [
   {

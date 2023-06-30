@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import FundCard from "./FundCard";
+import ParkingCard from "./ParkingCard";
 import { loader } from "../assets";
 
 function ParkingSpace({ title, isLoading, parkingSpace }) {
@@ -35,7 +35,7 @@ function ParkingSpace({ title, isLoading, parkingSpace }) {
         {!isLoading &&
           parkingSpace.length > 0 &&
           parkingSpace.map((parking, i) => (
-            <FundCard
+            <ParkingCard
               key={i}
               {...parking}
               handleClick={() => handleNavigate(parking)}

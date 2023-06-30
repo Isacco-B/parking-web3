@@ -15,6 +15,7 @@ import renterIcon from "./renter.svg";
 import price from "./price.svg";
 import available from "./available.svg";
 import menu from "./menu.svg";
+import clock from "./clock.svg";
 
 export {
   createParking,
@@ -34,4 +35,5 @@ export {
   price,
   available,
   menu,
+  clock,
 };

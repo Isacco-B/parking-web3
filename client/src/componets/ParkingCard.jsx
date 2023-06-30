@@ -1,6 +1,6 @@
 import React from "react";
 import { maps, price, ownerIcon, renterIcon } from "../assets";
-import ProcessBar from "./ProgressBar";
+import Date from "./Date";
 
 
 function FundCard({
@@ -15,7 +15,10 @@ function FundCard({
   image,
   handleClick,
   endTime,
+  startTime,
 }) {
+
+
   return (
     <div
       className="sm:w-[288px] w-full rounded-[10px] bg-white cursor-pointer shadow-md"
@@ -27,7 +30,10 @@ function FundCard({
           alt="image"
           className="w-full h-[157px] object-cover rounded-t-[10px]"
         />
-        {!isAvailable && <ProcessBar endTime={endTime} />}
+        {!isAvailable &&
+          renter !== "0x0000000000000000000000000000000000000000" && (
+            <Date date1={startTime} date2={endTime}/>
+          )}
       </div>
 
       <div className="flex flex-col p-4">

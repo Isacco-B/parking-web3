@@ -20,7 +20,7 @@ function App() {
         <Navbar />
         <Toaster />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />}/>
           <Route path="/profile" element={<Profile />} />
           <Route path="/events" element={<Events />} />
           <Route path="/add-parking" element={<CreateParkingSpace />} />
