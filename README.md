@@ -1,5 +1,5 @@
-# Progetto EthereumWeb3
-Created a user interface that allows interacting with a parking rental smart contract using React.
+# Parking-web3
+- Parking Web3 is an online platform for booking or renting parking spaces. It interacts with a custom smart contract, ensuring secure transactions through the use of blockchain technology.
 <a href="https://demo3.isaccobertoli.com/">Try Demo</a>
 
 
